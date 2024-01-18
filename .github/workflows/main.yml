@@ -1,0 +1,2 @@
+- name: swift-create-xcframework
+  uses: unsignedapps/swift-create-xcframework@v2.3.0
