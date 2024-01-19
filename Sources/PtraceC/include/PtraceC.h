@@ -1,1 +1,1 @@
-void PfdVSCqqteGFWxmSPFAw();
+void disable_gdb();

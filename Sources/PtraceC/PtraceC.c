@@ -3,17 +3,10 @@
 #import <sys/types.h>
 #include "PtraceC.h"
 
-#if defined (__arm64__)
-#define prevent_debugger PfdVSCqqteGFWxmSPFAw // Obfuscate function name
-void prevent_debugger() {
-    asm volatile (
-        "mov x0, #26\n" // ptrace syscall (26 in XNU)
-        "mov x1, #31\n" // PT_DENY_ATTACH (0x1f) - first arg
-        "mov x2, #0\n"
-        "mov x3, #0\n"
-        "mov x16, #0\n"
-        "svc #128\n"    // make syscall
-    );
-}
+typedef int (*ptrace_ptr_t)(int _request, pid_t _pid, caddr_t _addr, int _data);
+#define PT_DENY_ATTACH 31
 
-#endif
+void disable_gdb() {
+    ptrace_ptr_t ptrace_ptr = dlsym(RTLD_SELF, "ptrace");
+    ptrace_ptr(31, 0, 0, 0); // PTRACE_DENY_ATTACH = 31
+}

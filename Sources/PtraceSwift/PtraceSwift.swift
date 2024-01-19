@@ -4,6 +4,6 @@ import PtraceC
 
 public enum Ptrace {
     public static func denyAttach() {
-        PfdVSCqqteGFWxmSPFAw()
+        disable_gdb()
     }
 }
